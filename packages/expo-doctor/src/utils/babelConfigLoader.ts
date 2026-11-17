@@ -1,6 +1,8 @@
 import path from 'path';
 import resolveFrom from 'resolve-from';
 
+import { dynamicRequire } from './dynamicRequire';
+
 export interface BabelPluginConfig {
   file?: {
     request?: string;
@@ -48,7 +50,7 @@ export function loadBabelConfigPlugins(projectRoot: string): readonly BabelPlugi
       return null;
     }
 
-    const babelCore = require(babelCorePath) as BabelCore;
+    const babelCore = dynamicRequire(babelCorePath) as BabelCore;
     const partialConfig = babelCore.loadPartialConfigSync({
       cwd: projectRoot,
       filename: path.join(projectRoot, 'index.js'),

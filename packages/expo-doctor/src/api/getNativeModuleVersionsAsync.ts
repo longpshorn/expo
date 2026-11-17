@@ -1,3 +1,4 @@
+import fs from 'fs';
 import resolveFrom from 'resolve-from';
 
 type BundledNativeModules = Record<string, string>;
@@ -43,7 +44,7 @@ async function readLocalBundledNativeModulesAsync(
       'The dependency map expo/bundledNativeModules.json cannot be found. Ensure you have the "expo" package installed in your project.'
     );
   }
-  return require(bundledNativeModulesPath);
+  return JSON.parse(fs.readFileSync(bundledNativeModulesPath, 'utf8'));
 }
 
 function getExpoApiBaseUrl(): string {
